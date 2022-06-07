@@ -1,5 +1,5 @@
 # 442---Mini-Projet
-# 442 - Mini projet S2: Fonctions avancées de l'afficheur LCD
+# Fonctions avancées de l'afficheur LCD
 # Nathan BONVALET
 
 ## Table des matières
