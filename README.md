@@ -24,11 +24,22 @@ Parmi les fonctionnalités qui ont pu être utiles au jeu de labyrinthe, on peut
 ### 
 *BSP_LCD_SetLayerVisible(Layer, ENABLE/DISABLE)*
 
-*BSP_LCD_SetTransparency()*
+*BSP_LCD_SetTransparency()*: Cette fonction permet de gérer la transparence d'une couche. cela permet notamment de pouvoir voir une autre couche par transparence. Cette fonction est utile dans le cas du jeu de labyrinthe lorsque le joueur a perdu (tâche est en train de s'effectuer) et que l'écran de défaite permet de voir par transparence le chemin parcouru par le joueur au cours de la partie.
 
 *BSP_LCD_SetLayerWindow()*
 
-*BSP_LCD_Clear()*
+*BSP_LCD_Clear()*: Cette fonction permet de supprimer tout ce qui a été écrit sur une couche de l'afficheur LCD. Elle pemet par exemple de supprimer la trace faite par le joueur dans le jeu de labyrinthe lorsque le joueur a touché un mur, ou gagné:
+```c
+	//affichage de la victoire
+	if (Message == 2){
+		level = level + 1; //augmentation du niveau
+		vTaskDelete(tsk_affichageHandle);
+		vTaskDelete(tsk_horlogeHandle);
+		Message = 0;
+		BSP_LCD_Clear(00); //reset l'affichage écran
+		BSP_LCD_DrawBitmap(0,0,(uint8_t*) win_bmp);
+	}
+```
 
 *BSP_LCD_ReadPixel(X,Y)*: Cette fonction peut être très utile dans le cadre d'une image binaire ou très contrastée, car elle permet de faire des distinctions de parties de l'image simplement via la couleur du pixel selectionné. Elle est très utile dans le cas du codage d'un jeu de labyrinthe car elle permet de s'affranchir de coder l'ensemble des délimitations des murs (très fastidieuse), en prenant simplement en compte la couleur du pixel sélectionné: si le pixel est noir, c'st un mur. Avec un seuil de tolérance, cela permet de séparer deux catégories d'objets (murs et passages) facilement:
 
@@ -36,9 +47,16 @@ Parmi les fonctionnalités qui ont pu être utiles au jeu de labyrinthe, on peut
     // Couleur du pixel pointé
 	BSP_LCD_SelectLayer(0); //on choisit la couche 0 pour se mettre sur le fond
 	couleur_pix = BSP_LCD_ReadPixel(x_init+6, y_init+6);
-	blanc = BSP_LCD_ReadPixel(30,65); 
+	blanc = BSP_LCD_ReadPixel(30,65); //lecture de la couleur du fond blanc
     // On se remet sur la couche 1 d'écriture
 	BSP_LCD_SelectLayer(1); 
+
+
+	//Défaite sur murs
+	if (couleur_pix != blanc){
+	    arrivee = 1; // si touche un mur
+		Message = 1;
+	}
 
 ```
 
