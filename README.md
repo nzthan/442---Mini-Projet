@@ -23,7 +23,7 @@ Parmi les fonctionnalités qui ont pu être utiles au jeu de labyrinthe, on peut
 
 ### 
 
-*BSP_LCD_SelectLayer(Layer)*: Cette fonction permet de naviguer enter les différentes couches présentes sur l'écran LCD. Voici un schéma récapitulatif du système de couches
+*BSP_LCD_SelectLayer(Layer)*: Cette fonction permet de naviguer enter les différentes couches présentes sur l'écran LCD. Voici un schéma récapitulatif du système de couches ![ici](https://github.com/nzthan/442---Mini-Projet/blob/main/layers_system.png)
 
 , issu d'une [présentation du STM32F7-LTCD](https://www.st.com/content/ccc/resource/training/technical/product_training/group0/3f/7b/af/97/88/ba/48/33/STM32F7_Peripheral_LTDC/files/STM32F7_Peripheral_LTDC.pdf/jcr:content/translations/en.STM32F7_Peripheral_LTDC.pdf) (controlleur qui interagit avec l'écran LCD STM32F7)
 
